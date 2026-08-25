@@ -1,0 +1,61 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '4.1.1'
+	id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.mydemo'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(21)
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+ext {
+	set('springCloudVersion', "2025.1.3")
+}
+
+dependencies {
+
+	// Web / MVC
+	implementation 'org.springframework.boot:spring-boot-starter-webmvc'
+
+	// Explicitly brings Boot REST client infrastructure
+	implementation 'org.springframework.boot:spring-boot-restclient'
+
+	// OpenTelemetry support
+	implementation 'org.springframework.boot:spring-boot-starter-opentelemetry'
+
+	// Metrics
+	implementation 'org.springframework.boot:spring-boot-starter-micrometer-metrics'
+
+	// Lombok
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+
+	// Tests
+	testImplementation 'org.springframework.boot:spring-boot-starter-webmvc-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-opentelemetry-test'
+	testImplementation 'org.springframework.boot:spring-boot-starter-micrometer-metrics-test'
+
+	testCompileOnly 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+	imports {
+		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+	}
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}

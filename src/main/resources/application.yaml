@@ -1,0 +1,61 @@
+spring:
+  application:
+    name: observe
+
+management:
+  tracing:
+    sampling:
+      probability: 1.0
+
+  # OpenTelemetry traces
+  opentelemetry:
+    resource-attributes:
+      service.name: ${spring.application.name}
+      deployment.environment: ${SPRING_PROFILES_ACTIVE:local}
+
+    tracing:
+      export:
+        otlp:
+          transport: http
+          endpoint: https://otlp.nr-data.net/v1/traces
+          headers:
+            api-key: 8a249eb8fc76401002a431b7a7ccbb7f1697NRAL
+          compression: gzip
+          timeout: 10s
+
+  # Micrometer metrics
+  otlp:
+    metrics:
+      export:
+        enabled: true
+        url: https://otlp.nr-data.net/v1/metrics
+        headers:
+          api-key: 8a249eb8fc76401002a431b7a7ccbb7f1697NRAL
+        aggregation-temporality: delta
+        compression-mode: gzip
+        step: 30s
+        connect-timeout: 10s
+        read-timeout: 10s
+
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+
+  metrics:
+    tags:
+      application: ${spring.application.name}
+      environment: ${SPRING_PROFILES_ACTIVE:local}
+
+    distribution:
+      percentiles-histogram:
+        http.server.requests: true
+      percentiles:
+        http.server.requests: 0.5,0.95,0.99
+      slo:
+        http.server.requests: 50ms,100ms,250ms,500ms,1s,2s
+
+logging:
+  level:
+    io.opentelemetry: INFO
+    io.micrometer.tracing: INFO

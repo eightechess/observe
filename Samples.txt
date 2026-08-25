@@ -1,0 +1,9 @@
+Full demo using default values — http://localhost:8080/api/demo
+Full demo with explicit Arlington coordinates and USD → GBP conversion — useful for testing parameters and both downstream calls together:
+http://localhost:8080/api/demo?latitude=32.7357&longitude=-97.1081&amount=250&from=USD&to=GBP
+Full demo with USD → EUR conversion — same weather location, different currency pair:
+http://localhost:8080/api/demo?latitude=32.7357&longitude=-97.1081&amount=100&from=USD&to=EUR
+Test only the amount override — keeps all other defaults:
+http://localhost:8080/api/demo?amount=500
+Test only the currency pair — keeps the default weather coordinates and amount:
+http://localhost:8080/api/demo?from=USD&to=GBP
