@@ -19,7 +19,7 @@ management:
           transport: http
           endpoint: https://otlp.nr-data.net/v1/traces
           headers:
-            api-key: 8a249eb8fc76401002a431b7a7ccbb7f1697NRAL
+            api-key: ${NEW_RELIC_LICENSE_KEY}
           compression: gzip
           timeout: 10s
 
@@ -30,7 +30,7 @@ management:
         enabled: true
         url: https://otlp.nr-data.net/v1/metrics
         headers:
-          api-key: 8a249eb8fc76401002a431b7a7ccbb7f1697NRAL
+          api-key: //NewRelic Key
         aggregation-temporality: delta
         compression-mode: gzip
         step: 30s
