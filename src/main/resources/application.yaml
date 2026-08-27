@@ -19,7 +19,7 @@ management:
           transport: http
           endpoint: https://otlp.nr-data.net/v1/traces
           headers:
-            api-key: //NewRelic Key
+            api-key: ${NEW_RELIC_LICENSE_KEY}
           compression: gzip
           timeout: 10s
 
